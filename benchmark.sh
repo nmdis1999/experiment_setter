@@ -131,4 +131,3 @@ multitime -n 100 -r "rm -rf window-copy.o" -s 0 $CPATH/clang-16.tmp
     -Wundef -Wbad-function-cast -Winline -Wcast-align -Wdeclaration-after-statement
     -Wno-pointer-sign -Wno-attributes -Wno-unused-result -Wno-format-y2k -MT
     window-copy.o -MD -MP -MF $depbase.Tpo -c -o window-copy.o window-copy.c
-
