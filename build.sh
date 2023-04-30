@@ -21,7 +21,7 @@ fi
 TOPLEV=$home/$dirc
 
 if [ ! -d $TOPLEV ]; then
-        mkdir $TOPlEV
+        mkdir $TOPLEV
 fi
 
 cd $TOPLEV
@@ -105,7 +105,7 @@ if [ -d "${TOPLEV}/$stage2_dir" ]; then
 else
     mkdir "${TOPLEV}/$stage2_dir"
     cd "${TOPLEV}/$stage2_dir"
-    
+
     CPATH=${TOPLEV}/$stage1_dir/install/bin/    
     cmake -G Ninja ${TOPLEV}/llvm-project/llvm -DLLVM_TARGETS_TO_BUILD=X86 \
         -DCMAKE_BUILD_TYPE=Release \
@@ -115,7 +115,7 @@ else
         -DCMAKE_INSTALL_PREFIX=${TOPLEV}/$stage2_dir/install
 
     ninja install
-    
+
 fi
 
 # Generating profile for PGO
@@ -135,7 +135,7 @@ if [ -d "${TOPLEV}/$stage3_train" ]; then
 else
     mkdir "${TOPLEV}/$stage3_train"
     cd "${TOPLEV}/$stage3_train"
-    
+
     CPATH=${TOPLEV}/$stage2_dir/install/bin    
     cmake -G Ninja ${TOPLEV}/llvm-project/llvm -DLLVM_TARGETS_TO_BUILD=X86 \
         -DCMAKE_BUILD_TYPE=Release \
@@ -167,7 +167,7 @@ if [ -d "${TOPLEV}/$stage4" ]; then
 else
     mkdir "${TOPLEV}/$stage4"
     cd "${TOPLEV}/$stage4"
-    
+
     CPATH=${TOPLEV}/$stage1_dir/install/bin/
     export LDFLAGS="-Wl,-q"
     cmake -G Ninja ${TOPLEV}/llvm-project/llvm -DLLVM_TARGETS_TO_BUILD=X86 \
