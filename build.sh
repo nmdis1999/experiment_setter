@@ -9,8 +9,8 @@ missing=0
 check_for () {
     which $1 > /dev/null 2> /dev/null
     if [ $? -ne 0 ]; then
-    echo "Error: can't find $1 binary"
-    missing=1
+        echo "Error: can't find $1 binary"
+        missing=1
     fi
 }
 
@@ -38,8 +38,8 @@ fi
 if [ -d "build" ]; then
     read -p "The 'build' directory already exists. Do you want to continue? (y/n) " answer
     if [ "$answer" != "y" ]; then
-    echo "Exiting script."
-    exit 1
+        echo "Exiting script."
+        exit 1
     fi
 else
     # Create a build directory and navigate to it
@@ -68,8 +68,8 @@ fi
 if [ -d "${TOPLEV}/$stage1_dir" ]; then
     read -p "The '${stage1_dir}' directory already exists. Do you want to continue? (y/n) " answer
     if [ "$answer" != "y" ]; then
-    echo "Directory ${stage1_dir} already exists, exiting script."
-    exit 1
+        echo "Directory ${stage1_dir} already exists, exiting script."
+        exit 1
     fi
 else
     # Build stage1 clang from default gcc
@@ -99,8 +99,8 @@ fi
 if [ -d "${TOPLEV}/$stage2_dir" ]; then
     read -p "The '${stage2_dir}' directory already exists. Do you want to continue? (y/n) " answer
     if [ "$answer" != "y" ]; then
-    echo "Directory ${stage2_dir} already exists, exiting script."
-    exit 1
+        echo "Directory ${stage2_dir} already exists, exiting script."
+        exit 1
     fi
 else
     mkdir "${TOPLEV}/$stage2_dir"
@@ -129,8 +129,8 @@ fi
 if [ -d "${TOPLEV}/$stage3_train" ]; then
     read -p "The '${stage3_train}' directory already exists. Do you want to continue? (y/n) " answer
     if [ "$answer" != "y" ]; then
-    echo "Directory ${stage3_train} already exists, exiting script."
-    exit 1
+        echo "Directory ${stage3_train} already exists, exiting script."
+        exit 1
     fi
 else
     mkdir "${TOPLEV}/$stage3_train"
@@ -161,8 +161,8 @@ fi
 if [ -d "${TOPLEV}/$stage4" ]; then
     read -p "The '${stage4}' directory already exists. Do you want to continue? (y/n) " answer
     if [ "$answer" != "y" ]; then
-    echo "Directory ${stage4} already exists, exiting script."
-    exit 1
+        echo "Directory ${stage4} already exists, exiting script."
+        exit 1
     fi
 else
     mkdir "${TOPLEV}/$stage4"

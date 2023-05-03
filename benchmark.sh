@@ -10,8 +10,8 @@ fi
 if [ -d "tmux" ]; then
     read -p "The 'tmux' directory already exists. Do you want to continue? (y/n) " answer
     if [ "$answer" = "n" ]; then
-    echo "Directory tmux already exists, exiting script."
-    exit 1
+        echo "Directory tmux already exists, exiting script."
+        exit 1
     fi
 else
     git clone https://github.com/tmux/tmux.git
@@ -79,14 +79,16 @@ DFLAGS="$DFLAGS" $CPATH/clang-16 -MT window-copy.o -MD -MP -MF $depbase.Tpo -c
 # trace error.
 # https://perf.wiki.kernel.org/index.php/Latest_Manual_Page_of_perf-intel-pt.1#:~:text=be%20used%20together.-,Buffer%20handling,-There%20may%20be
 
-while true; do
-    rm -rf pt.data
-    perf record -o pt.data -e intel_pt//u -m,256M -- env CFLAGS="$CFLAGS" DFLAGS="$DFLAGS" $CPATH/clang-16 -MT window-copy.o -MD -MP -MF $depbase.Tpo -c -o window-copy.o window-copy.c 
-   if perf script -i pt.data --itrace=e | grep -q "instruction trace error"; then 
-    echo "Instruction trace error, recording data again ..." 
-    else 
-    echo "Captured pt.data without Instruction trace errors." 
-    break 
+while true; 
+do 
+    rm -rf pt.data 
+    perf record -o pt.data -e intel_pt//u -m,256M --env CFLAGS="$CFLAGS" \
+        DFLAGS="$DFLAGS" $CPATH/clang-16 -MT window-copy.o -MD \
+        -MP -MF $depbase.Tpo -c -o window-copy.o window-copy.c 
+    if perf script -i pt.data --itrace=e | grep -q "instruction trace error"; then 
+        echo "Instruction trace error, recording data again ..." 
+     else 
+         echo "Captured  pt.data without Instruction trace errors." break 
     fi 
 
 perf2bolt $CPATH/clang-16 --nl -p nolbr.data -o nolbr.fdata -w nolbr.yaml
@@ -131,3 +133,4 @@ multitime -n 100 -r "rm -rf window-copy.o" -s 0 $CPATH/clang-16.tmp
     -Wundef -Wbad-function-cast -Winline -Wcast-align -Wdeclaration-after-statement
     -Wno-pointer-sign -Wno-attributes -Wno-unused-result -Wno-format-y2k -MT
     window-copy.o -MD -MP -MF $depbase.Tpo -c -o window-copy.o window-copy.c
+
