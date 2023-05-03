@@ -70,7 +70,7 @@ DFLAGS="-DPACKAGE_NAME=\"tmux\"
 # NO LBR Mode (Not wrapping 80 words per line for perd because command doesn't run properly) 
 perf record -o nolbr.data -- env CFLAGS="$CFLAGS" DFLAGS="$DFLAGS" $CPATH/clang-16 -MT window-copy.o -MD -MP -MF $depbase.Tpo -c -o window-copy.o window-copy.c
 
-# LBR Mode
+# # LBR Mode
 perf record -o lbr.data -e cycles:u -j any,u -- env CFLAGS="$CFLAGS"
 DFLAGS="$DFLAGS" $CPATH/clang-16 -MT window-copy.o -MD -MP -MF $depbase.Tpo -c
 -o window-copy.o window-copy.c
@@ -88,8 +88,10 @@ do
     if perf script -i pt.data --itrace=e | grep -q "instruction trace error"; then 
         echo "Instruction trace error, recording data again ..." 
      else 
-         echo "Captured  pt.data without Instruction trace errors." break 
+         echo "Captured  pt.data without Instruction trace errors." 
+         break
     fi 
+done
 
 perf2bolt $CPATH/clang-16 --nl -p nolbr.data -o nolbr.fdata -w nolbr.yaml
 perf2bolt $CPATH/clang-16 -p lbr.data -o lbr.fdata -w lbr.yaml
