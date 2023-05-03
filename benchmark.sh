@@ -4,14 +4,14 @@ set -e
 read -p "Current working directory is $(pwd). Want to change it? (y/n)" answer
 
 if [ "$answer" = "y" ]; then
-        exit
+    exit
 fi
 
 if [ -d "tmux" ]; then
     read -p "The 'tmux' directory already exists. Do you want to continue? (y/n) " answer
     if [ "$answer" = "n" ]; then
-        echo "Directory tmux already exists, exiting script."
-        exit 1
+    echo "Directory tmux already exists, exiting script."
+    exit 1
     fi
 else
     git clone https://github.com/tmux/tmux.git
@@ -83,10 +83,10 @@ while true; do
     rm -rf pt.data
     perf record -o pt.data -e intel_pt//u -m,256M -- env CFLAGS="$CFLAGS" DFLAGS="$DFLAGS" $CPATH/clang-16 -MT window-copy.o -MD -MP -MF $depbase.Tpo -c -o window-copy.o window-copy.c 
    if perf script -i pt.data --itrace=e | grep -q "instruction trace error"; then 
-        echo "Instruction trace error, recording data again ..." 
+    echo "Instruction trace error, recording data again ..." 
     else 
-        echo "Captured pt.data without Instruction trace errors." 
-        break 
+    echo "Captured pt.data without Instruction trace errors." 
+    break 
     fi 
 
 perf2bolt $CPATH/clang-16 --nl -p nolbr.data -o nolbr.fdata -w nolbr.yaml
