@@ -86,8 +86,8 @@ do
     if [[ $(perf script -i pt.data --itrace=e | grep -q "instruction trace error") ]]; then 
         echo "Instruction trace error, recording data again ..." 
      else 
-         echo "Captured  pt.data without Instruction trace errors." 
-         break
+        echo "Captured  pt.data without Instruction trace errors." 
+        break
     fi 
 done
 
