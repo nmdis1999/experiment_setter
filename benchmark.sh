@@ -3,11 +3,11 @@ set -e
 
 read -p "Current working directory is $(pwd). Want to change it? (y/n)" answer
 
-if [ "$answer" = "y" ]; then
+if [[ "$answer" = "y" ]]; then
     exit
 fi
 
-if [ -d "tmux" ]; then
+if [[ -d "tmux" ]]; then
     read -p "The 'tmux' directory already exists. Do you want to continue? (y/n) " answer
     if [ "$answer" = "n" ]; then
         echo "Directory tmux already exists, exiting script."
@@ -22,7 +22,7 @@ else
     ./configure
 fi
 
-if [ $# -eq 0 ]; then
+if [[ $# -eq 0 ]]; then
     echo "Please provide the path to clang binary as an argument (e.g /usr/local/bin)"
     exit 1
 fi
@@ -31,7 +31,7 @@ CPATH=$1
 
 $CPATH/clang --version > /dev/null 2>&1
 
-if [ $? -eq 0 ]; then
+if [[ $? -eq 0 ]]; then
     echo "Clang binary found at $CPATH"
 else
     echo "No executable clang binary found at $CPATH"
@@ -82,10 +82,8 @@ DFLAGS="$DFLAGS" $CPATH/clang-16 -MT window-copy.o -MD -MP -MF $depbase.Tpo -c
 while true; 
 do 
     rm -rf pt.data 
-    perf record -o pt.data -e intel_pt//u -m,256M --env CFLAGS="$CFLAGS" \
-        DFLAGS="$DFLAGS" $CPATH/clang-16 -MT window-copy.o -MD \
-        -MP -MF $depbase.Tpo -c -o window-copy.o window-copy.c 
-    if perf script -i pt.data --itrace=e | grep -q "instruction trace error"; then 
+    $(perf record -o pt.data -e intel_pt//u -m,256M -- env CFLAGS="$CFLAGS" DFLAGS="$DFLAGS" $CPATH/clang-16 -MT window-copy.o -MD -MP -MF $depbase.Tpo -c -o window-copy.o window-copy.c)
+    if [[ $(perf script -i pt.data --itrace=e | grep -q "instruction trace error") ]]; then 
         echo "Instruction trace error, recording data again ..." 
      else 
          echo "Captured  pt.data without Instruction trace errors." 

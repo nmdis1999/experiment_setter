@@ -8,26 +8,26 @@ dirc=$1
 missing=0
 check_for () {
     which $1 > /dev/null 2> /dev/null
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         echo "Error: can't find $1 binary"
         missing=1
     fi
 }
 
-if [ -z "$dirc" ]; then
+if [[ -z "$dirc" ]]; then
     dirc="bolt"
 fi
 
 TOPLEV=$home/$dirc
 
-if [ ! -d $TOPLEV ]; then
+if [[ ! -d $TOPLEV ]]; then
     mkdir $TOPLEV
 fi
 
 cd $TOPLEV
 
 # Check if llvm-project repo exists, otherwise clone it
-if [ -d "llvm-project" ]; then
+if [[ -d "llvm-project" ]]; then
     cd llvm-project
     git pull
     cd ..
@@ -35,7 +35,7 @@ else
     git clone https://github.com/nmdis1999/llvm-project.git
 fi
 
-if [ -d "build" ]; then
+if [[ -d "build" ]]; then
     read -p "The 'build' directory already exists. Do you want to continue? (y/n) " answer
     if [ "$answer" != "y" ]; then
         echo "Exiting script."
@@ -59,15 +59,15 @@ export PATH=$TOPLEV/build/bin:$PATH
 echo "Enter name for stage1 clang build (default: stage1)"
 read stage1_dir
 
-if [ -z "$stage1_dir" ]; then
+if [[ -z "$stage1_dir" ]]; then
     stage1_dir="stage1"
 fi
 
 # Build stage1 clang from default gcc
 
-if [ -d "${TOPLEV}/$stage1_dir" ]; then
+if [[ -d "${TOPLEV}/$stage1_dir" ]]; then
     read -p "The '${stage1_dir}' directory already exists. Do you want to continue? (y/n) " answer
-    if [ "$answer" != "y" ]; then
+    if [[ "$answer" != "y" ]]; then
         echo "Directory ${stage1_dir} already exists, exiting script."
         exit 1
     fi
@@ -92,13 +92,13 @@ cd $path
 echo "Enter name for stage2 profile generation build (default: stage2-prof-gen)"
 read stage2_dir
 
-if [ -z "$stage2_dir" ]; then 
+if [[ -z "$stage2_dir" ]]; then 
     stage2_dir="stage2-prof-gen"
 fi
 
-if [ -d "${TOPLEV}/$stage2_dir" ]; then
+if [[ -d "${TOPLEV}/$stage2_dir" ]]; then
     read -p "The '${stage2_dir}' directory already exists. Do you want to continue? (y/n) " answer
-    if [ "$answer" != "y" ]; then
+    if [[ "$answer" != "y" ]]; then
         echo "Directory ${stage2_dir} already exists, exiting script."
         exit 1
     fi
@@ -122,13 +122,13 @@ fi
 echo "Enter name for stage3 profile generation build (default: stage3-train)"
 read stage3_train
 
-if [ -z "$stage3_train" ]; then 
+if [[ -z "$stage3_train" ]]; then 
     stage3_train="stage3-train"
 fi
 
-if [ -d "${TOPLEV}/$stage3_train" ]; then
+if [[ -d "${TOPLEV}/$stage3_train" ]]; then
     read -p "The '${stage3_train}' directory already exists. Do you want to continue? (y/n) " answer
-    if [ "$answer" != "y" ]; then
+    if [[ "$answer" != "y" ]]; then
         echo "Directory ${stage3_train} already exists, exiting script."
         exit 1
     fi
@@ -154,13 +154,13 @@ ${TOPLEV}/stage1/install/bin/llvm-profdata merge -output=clang.profdata *
 echo "Enter name for stage4 profile generation build (default: stage2-prof-use-lto)"
 read stage4
 
-if [ -z "$stage4" ]; then 
+if [[ -z "$stage4" ]]; then 
     stage4="stage4"
 fi
 
-if [ -d "${TOPLEV}/$stage4" ]; then
+if [[ -d "${TOPLEV}/$stage4" ]]; then
     read -p "The '${stage4}' directory already exists. Do you want to continue? (y/n) " answer
-    if [ "$answer" != "y" ]; then
+    if [[ "$answer" != "y" ]]; then
         echo "Directory ${stage4} already exists, exiting script."
         exit 1
     fi
