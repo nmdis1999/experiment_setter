@@ -112,7 +112,8 @@ compile_tty() {
     -MP \
     -MF $depbase.Tpo \
     -c \
-    -o tty.o tty.c
+    -o tty.o \
+    tty.c
 }
 
 compile_format() {    
@@ -220,13 +221,7 @@ compile_gcc() {
     multitime -n 3 -s 0 -r "rm -rf gcc.o" $CPATH -o gcc.o gcc.c
 }
 
-run_with() {
-    local BINPATH ="$1"
-    compile_format $BINPATH
-    compile_tty $BINPATH
-    compile_gcc $BINPATH
-}
-
-BINPATH=/usr/bin/clang
-check_for $BINPATH
-run_with $BINPATH
+check_for $CC
+compile_format $CC
+compile_tty $CC
+compile_gcc $CC
