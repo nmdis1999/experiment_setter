@@ -82,7 +82,7 @@ process_directory() {
         -pt)
             echo "Checking .data files in $dir"
             for data_file in $(find "$dir" -name "*.data")]; do
-                if [$(perf script -i "$data_file" --itrace=e | grep -q "instruction trace error"); then
+                if [$(perf script -i "$data_file" --itrace=e | grep -q "instruction trace error")]; then
                     echo "Error: instruction trace error found in $data_file"
                     echo "Please record the profile again."
                     exit 1
