@@ -9,7 +9,7 @@ rm -rf window-copy.o
 rm -rf tty.o
 rm -rf format.o
 rm -rf $HOME/research/extsmail/extsmaild.o
-
+rm -rf gcc.o
 echo "Cleaned pre-build files."
 
 missing=0
@@ -21,24 +21,36 @@ check_for () {
     fi
 }
 
-check_for multitime
+check_for valgrind
+
+dest="$HOME/report/experiment_setter/callgrind_data"
+
+if [[ ! -d "$dest" ]]; then
+    mkdir -p "$dest"
+fi
 
 compile_extsmaild() {
     local CPATH="$1"
     local current_dir="$(pwd)"
     cd $HOME/research/extsmail
-    multitime -n 100 -s 0 -r "rm -rf extsmaild.o" bash -c "$CPATH -g -O2 -std=c99 \
+    rm -rf callgrind.out.*
+    valgrind --tool=callgrind $CPATH -g -O2 -std=c99 \
         -Wall -pedantic -Wextra \
         -D_POSIX_C_SOURCE=2 -c \
-        -o extsmaild.o extsmaild.c 2>/dev/null"
-    cd "$current_dir"
+        -o extsmaild.o extsmaild.c 2>/dev/null
+    A=$(basename $CPATH | cut -d. -f2)
+    B=$(basename $CPATH | cut -d. -f3)
+    mv callgrind.out.* callgrind.${B}-${A}.exts
+    mv "callgrind.${B}-${A}.exts" "$dest"
+    cd "$current_dit"
     echo "directory is $(pwd)"
 }
 
 compile_tty() {
     # Path to clang binary
     local CPATH="$1"
-    multitime -n 100 -s 0 -r "rm -rf tty.o" $CPATH -DPACKAGE_NAME=\"tmux\" \
+    rm -rf callgrind.out.*
+    valgrind --tool=callgrind $CPATH -DPACKAGE_NAME=\"tmux\" \
     -DPACKAGE_TARNAME=\"tmux\" \
     -DPACKAGE_VERSION=\"next-3.4\" \
     -DPACKAGE_STRING=\"tmux\ next-3.4\" \
@@ -135,11 +147,17 @@ compile_tty() {
     -c \
     -o tty.o tty.c
     2>/dev/null
+
+    A=$(basename $CPATH | cut -d. -f2)
+    B=$(basename $CPATH | cut -d. -f3)
+    mv callgrind.out.* callgrind.${B}-${A}.tty
+    mv callgrind.${B}-${A}.tty $dest
 }
 
 compile_format() {    
     local CPATH="$1"
-    multitime -n 100 -s 0 -r "rm -rf format.o" $CPATH -DPACKAGE_NAME=\"tmux\" \
+    rm -rf callgrind.out.*
+    valgrind --tool=callgrind $CPATH -DPACKAGE_NAME=\"tmux\" \
     -DPACKAGE_TARNAME=\"tmux\" \
     -DPACKAGE_VERSION=\"next-3.4\" \
     -DPACKAGE_STRING=\"tmux\ next-3.4\" \
@@ -236,11 +254,17 @@ compile_format() {
     -c \
     -o format.o format.c
     2>/dev/null
+
+    A=$(basename $CPATH | cut -d. -f2)
+    B=$(basename $CPATH | cut -d. -f3)
+    mv callgrind.out.* callgrind.${B}-${A}.format
+    mv callgrind.${B}-${A}.format $dest
 }
 
 compile_window_copy() {
     local CPATH="$1"
-    multitime -n 100 -s 0 -r "rm -rf window-copy.o" $CPATH -DPACKAGE_NAME="tmux" \
+    rm -rf callgrind.out.*
+    valgrind --tool=callgrind $CPATH -DPACKAGE_NAME="tmux" \
     -DPACKAGE_TARNAME="tmux" \
     -DPACKAGE_VERSION="next-3.4" \
     -DPACKAGE_STRING="tmux next-3.4" \
@@ -335,12 +359,22 @@ compile_window_copy() {
     -c \
     -o window-copy.o window-copy.c
     2>/dev/null
+
+    A=$(basename $CPATH | cut -d. -f2)
+    B=$(basename $CPATH | cut -d. -f3)
+    mv callgrind.out.* callgrind.${B}-${A}.window-copy
+    mv callgrind.${B}-${A}.window-copy $dest
 }
 
 compile_gcc() {
     local CPATH="$1"
-    multitime -n 100 -s 0 -r "rm -rf gcc.o" bash -c "$CPATH -o gcc.o gcc.c \
+    rm -rf callgrind.out.*
+    valgrind --tool=callgrind bash -c "$CPATH -o gcc.o gcc.c \
         2>/dev/null"
+    A=$(basename $CPATH | cut -d. -f2)
+    B=$(basename $CPATH | cut -d. -f3)
+    mv callgrind.out.* callgrind.${B}-${A}.gcc
+    mv callgrind.${B}-${A}.gcc $dest
 }
 check_for $CC
 compile_format $CC
