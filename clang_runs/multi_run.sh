@@ -347,5 +347,5 @@ compile_format $CC
 compile_tty $CC
 compile_window_copy $CC
 compile_extsmaild $CC
-compile_gcc $CC
+# compile_gcc $CC
 

@@ -1,5 +1,8 @@
 #! /bin/sh
 
+# This script is responsible for building optimized clang version (with lto and
+# pgo)
+
 set -e
 
 home=$HOME/report
