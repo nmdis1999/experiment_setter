@@ -77,7 +77,7 @@ better.
 ### **Comparing clang versions obtained from aggregating LBR profiles running _n_ times on a file with clang obtained from Intel PT mode profile running 1 time on the same file**
 
 <figure>
-    <img src="experiment_setter/plot_graphs/png_files/line_chart.extsmaild.png" alt="Line chart">
+    <img src="plot_graphs/png_files/line_chart.extsmaild.png" alt="Line chart">
     <figcaption>In figure above, the x-axis is versions of clang (obtained with
     profile captured during file’s compilation (i.e clang.exts is clang
     optimized with llvm-bolt after gathering profile during extsmaild.c file
