@@ -24,10 +24,7 @@ Increase in LOC profiled function trends overall in better performance with equa
 
 ## Intel PT
 
-| Run/Profile | Baseline | extsmail.c.           (1781) | tty.c         (3026) | format.c (5188) | window-copy.c.Sure, here is the rest of the information converted into Markdown:
-
-```markdown
-    (5662) |
+| Run/Profile | Baseline | extsmail.c.           (1781) | tty.c         (3026) | format.c (5188) | window-copy.c.    (5662) |
 | --- | --- | --- | --- | --- | --- |
 | format.c | 0.907 ± 0.0008 | 0.723 ± 0.006 | 0.709 ± 0.0009 | 0.701 ± 0.009 | 0.701 ± 0.0008 |
 | tty.c | 0.557 ± 0.0008 | 0.441 ± 0.0005 | 0.430 ± 0.0005 | 0.429 ± 0.0005 | 0.428 ± 0.0005 |
@@ -45,4 +42,3 @@ extsmaild.c profiled clang gives overall the best results in NO LBR format, and 
 ### **Q: Is Intel PT data worse than LBR in any of the runs (compare best of LBR and worst of LBR)**
 
 Similar to LBR case, the best case in LBR (window-copy.c profiled clang) and worst case in Intel PT mode (extsmaild.c profiled clang) overlaps but can’t be claimed that PT is worse. With same profiled clang(s) Intel PT performs overall better.
-
