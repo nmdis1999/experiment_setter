@@ -76,14 +76,14 @@ better.
 
 ### **Comparing clang versions obtained from aggregating LBR profiles running _n_ times on a file with clang obtained from Intel PT mode profile running 1 time on the same file**
 
-<figure>
-    <img src="plot_graphs/png_files/line_chart.extsmaild.png" alt="Line chart">
-    <figcaption>In figure above, the x-axis is versions of clang (obtained with
-    profile captured during file’s compilation (i.e clang.exts is clang
-    optimized with llvm-bolt after gathering profile during extsmaild.c file
-    compilation). The y-axis is the mean values. the line (-.) is clang
-    aggregated with number of profiles (compiling the same file). And the
-    shaded region is 99% confidence interval.</figcaption> 
+ <figure>
+  <img src="../plot_graphs/png_files/line_chart.extsmaild.png" alt="Alt text">
+  <figcaption style="font-size: small; font-style: italic;">In figure above, the x-axis is versions of clang (obtained with
+  profile captured during file’s compilation (i.e clang.exts is clang optimized
+  with llvm-bolt after gathering profile during extsmaild.c file compilation).
+  The y-axis is the mean values. the line (-.) is clang aggregated with number
+  of profiles (compiling the same file). And the shaded region is 99%
+  confidence interval.</figcaption> 
 </figure>
 
 
