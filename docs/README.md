@@ -72,4 +72,18 @@ better.
 | clang-16.pt.format. | 26062 | 24775 | 26223 | 24711 | 
 | clang-16.pt.tty | 24858 | 23878 | 25141 | 23694 | 
 | clang-16.pt.window-copy | 25973 | 24837 | 26335 | 24713 | 
-| clang-16.pt.exts | 23253 | 22301 | 23547 | 22387 | 
+| clang-16.pt.exts | 23253 | 22301 | 23547 | 22387 |
+
+### **Comparing clang versions obtained from aggregating LBR profiles running _n_ times on a file with clang obtained from Intel PT mode profile running 1 time on the same file**
+
+<figure>
+    <img src="experiment_setter/plot_graphs/png_files/line_chart.extsmaild.png" alt="Line chart">
+    <figcaption>In figure above, the x-axis is versions of clang (obtained with
+    profile captured during file’s compilation (i.e clang.exts is clang
+    optimized with llvm-bolt after gathering profile during extsmaild.c file
+    compilation). The y-axis is the mean values. the line (-.) is clang
+    aggregated with number of profiles (compiling the same file). And the
+    shaded region is 99% confidence interval.</figcaption> 
+</figure>
+
+
